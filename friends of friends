@@ -1,0 +1,25 @@
+#In the book we can see more than 1 function for creating friend of friends list.
+#We have data: users=[{"id":1,"friends":[{"id":4,"friends":7......]
+def friends_of_friend_ids_bad(user):
+    return [foaf["id"]
+           for friend in user["friends"]
+           for foaf in friend["friends"]]
+ #result [4, 7, 10, 3, 7, 7, 4, 7] with my data for users[7]. We dont need in ids 7.
+ #It turns out the desired list,but included our own id and own friends. We want only recommendations.
+ # Exclude persons known to the user
+ def not_the_same(user,other_user):
+     return user["id"]!=other_user["id"]
+ #not friends
+ def not_friends(user,other_user):
+     return all(not_the_same(friend,other_user)
+               for friend in user["friends"])
+ ...
+ #I tried to get the list through other function. In my code users were replaced by people.
+n=int(input("input the ID for list with recommended friends:"))
+def fof(n):
+    return list(set([p["id"]
+    for pe in (people[n]["friends"])
+    for p in pe["friends"]
+    if p["id"]!=pe["id"] and p["id"]!=people[n]["id"]]))
+print(fof(n))
+# result [10, 3, 4] 
